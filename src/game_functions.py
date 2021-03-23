@@ -4,7 +4,9 @@ import pygame
 from src.bullet import Bullet
 
 
+# 监听事件
 def check_events(ai_settings, screen, ship, bullets):
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -57,5 +59,5 @@ def update_screen(ai_setting, screen, ship, bullets):
 def update_bullets(bullets):
     bullets.update()
     for bullet in bullets.copy():
-        if bullet.rect.bottom <=0:
+        if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
