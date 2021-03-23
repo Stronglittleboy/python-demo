@@ -40,6 +40,9 @@ def key_down_methods(event, ai_settings, screen, ship, bullets):
         ship.moving_down = True
     elif event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, bullets, screen, ship)
+    # 按键Q退出
+    elif event.key == pygame.K_q:
+        sys.exit()
 
 
 def fire_bullet(ai_settings, bullets, screen, ship):
@@ -48,11 +51,12 @@ def fire_bullet(ai_settings, bullets, screen, ship):
         bullets.add(new_bullet)
 
 
-def update_screen(ai_setting, screen, ship, bullets):
+def update_screen(ai_setting, screen, ship,alien, bullets):
     screen.fill(ai_setting.bg_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
+    alien.blitme()
     pygame.display.flip()
 
 
