@@ -17,14 +17,14 @@ def run_game():
     ship = Ship(ai_setting, screen)
     bullets = Group()
     aliens = Group()
+    ship_height = ship.rect.height
     # 创建外星人群
-    gf.create_aliens(ai_setting,screen,aliens)
+    gf.create_aliens(ai_setting,screen,aliens,ship_height)
     while True:
         gf.check_events(ai_setting, screen, ship, bullets)
         ship.update()
         # 子弹管理更新处理
         gf.update_bullets(bullets)
         gf.update_screen(ai_setting, screen, ship, aliens,bullets)
-
 
 run_game()
