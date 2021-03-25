@@ -13,13 +13,11 @@ class Ship():
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
 
-        print("测试狂傲",self.rect.width,self.rect.height)
         self.center = float(self.rect.centerx)
         self.moving_right = False
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
-        print("飞机中心店", self.center)
 
     def update(self):
         ship_speed_factor = self.ai_settings.ship_speed_factor
