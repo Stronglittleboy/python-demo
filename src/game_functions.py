@@ -1,4 +1,6 @@
 import sys
+from time import sleep
+
 import pygame
 
 from src.alien import Alien
@@ -134,7 +136,34 @@ def check_fleet_edges(ai_setting, aliens):
 
 
 # 更新外星人
-def update_aliens(ai_setting, aliens):
+def ship_hit(ai_setting, stats, screen, ship, aliens, bullets):
+    # 生命数量-1
+    if stats.ships_left > 0:
+        stats.ships_left -= 1
+        # 清空外星人列表和子弹列表
+        aliens.empty()
+        bullets.empty()
+        create_aliens(ai_setting, screen, aliens, ship.rect.height)
+        ship.center_ship()
+        sleep(0.5)
+    else:
+        stats.game_active = False
+
+
+def update_aliens(ai_setting, screen, ship, stats, aliens, bullets):
     # 更新外星人群中所有外星人的位置
     check_fleet_edges(ai_setting, aliens)
     aliens.update()
+    check_aliens_bottom(ai_setting, stats, screen, ship, aliens, bullets)
+    # 检测外星人和飞船之间的碰撞
+    if pygame.sprite.spritecollideany(ship, aliens):
+        ship_hit(ai_setting, stats, screen, ship, aliens, bullets)
+
+
+# 检测外星人到底，游戏结束
+def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            break
