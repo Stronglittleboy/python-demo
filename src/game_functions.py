@@ -73,30 +73,36 @@ def fire_bullet(ai_settings, bullets, screen, ship):
         bullets.add(new_bullet)
 
 
-def update_screen(ai_setting, screen, stats, ship, aliens, bullets, play_button):
+def update_screen(ai_setting, screen, stats, sb,ship, aliens, bullets, play_button):
     screen.fill(ai_setting.bg_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     aliens.draw(screen)
     ship.blitme()
+    sb.show_score()
     if not stats.game_active:
         play_button.draw_button()
     pygame.display.flip()
 
 
-def update_bullets(ai_setting, screen, ship, bullets, aliens):
+def update_bullets(ai_setting, screen, ship, bullets, aliens,stats,sb):
     # 更新子弹位置，并删除已消失的子弹
     bullets.update()
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
     # 检查是否有子弹击中了外星人
-    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
-    check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship)
+
+    check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship,stats,sb)
 
 
 # 打所有的外星人被消灭后
-def check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship):
+def check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship,stats,sb):
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if collisions:
+        for aliens in collisions.values():
+            stats.score+=ai_setting.alien_points*len(aliens)
+            sb.prep_score()
     if len(aliens) == 0:
         bullets.empty()
         ai_setting.increase_speed()
