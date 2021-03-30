@@ -11,6 +11,8 @@ from src.bullet import Bullet
 def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
+        # 重置游戏设置
+        ai_settings.initialize_dynamic_settings()
         # 隐藏光标
         pygame.mouse.set_visible(False)
         # 重置游戏统计信息
@@ -90,8 +92,14 @@ def update_bullets(ai_setting, screen, ship, bullets, aliens):
             bullets.remove(bullet)
     # 检查是否有子弹击中了外星人
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship)
+
+
+# 打所有的外星人被消灭后
+def check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship):
     if len(aliens) == 0:
         bullets.empty()
+        ai_setting.increase_speed()
         ship_height = ship.rect.height
         create_aliens(ai_setting, screen, aliens, ship_height)
 
