@@ -4,6 +4,7 @@ from pygame._sprite import Group
 import game_functions as gf
 from setting import Settings
 from ship import Ship
+from src.button import Button
 from src.game_stats import GameStats
 
 
@@ -13,6 +14,7 @@ def run_game():
     ai_setting = Settings()
     screen = pygame.display.set_mode((ai_setting.screen_width, ai_setting.screen_height))
     pygame.display.set_caption("Alien Invasion")
+    play_button = Button(ai_setting, screen, "PLAY")
     pygame.display.set_gamma(0, 255, 0)
     ship = Ship(ai_setting, screen)
     bullets = Group()
@@ -22,7 +24,7 @@ def run_game():
     # 创建外星人群
     gf.create_aliens(ai_setting, screen, aliens, ship_height)
     while True:
-        gf.check_events(ai_setting, screen, ship, bullets)
+        gf.check_events(ai_setting, screen, stats, play_button, ship, aliens, bullets)
         if stats.game_active:
             ship.update()
             # 子弹管理更新处理
@@ -30,7 +32,7 @@ def run_game():
             # 更新外星人
             gf.update_aliens(ai_setting, screen, ship, stats, aliens, bullets)
         # 刷新窗口
-        gf.update_screen(ai_setting, screen, ship, aliens, bullets)
+        gf.update_screen(ai_setting, screen, stats, ship, aliens, bullets, play_button)
 
 
 run_game()
