@@ -1,7 +1,7 @@
 import pygame
 from pygame.sprite import Group
 
-from src.ship import Ship
+from src.aliengame.ship import Ship
 
 
 class Scoreboard():

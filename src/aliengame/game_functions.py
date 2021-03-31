@@ -3,8 +3,8 @@ from time import sleep
 
 import pygame
 
-from src.alien import Alien
-from src.bullet import Bullet
+from src.aliengame.alien import Alien
+from src.aliengame.bullet import Bullet
 
 
 # 在玩家单击Play按钮时开始新游戏

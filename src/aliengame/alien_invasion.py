@@ -4,9 +4,9 @@ from pygame._sprite import Group
 import game_functions as gf
 from setting import Settings
 from ship import Ship
-from src.button import Button
-from src.game_stats import GameStats
-from src.scoreboard import Scoreboard
+from src.aliengame.button import Button
+from src.aliengame.game_stats import GameStats
+from src.aliengame.scoreboard import Scoreboard
 
 
 def run_game():

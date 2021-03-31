@@ -9,7 +9,7 @@ class Ship(Sprite):
         self.screen = screen
         self.ai_settings = ai_settings
         # 加载飞船图像，并获取其外接矩形
-        self.image = pygame.image.load("D:\workProject\python\python-demo\images\ship.bmp")
+        self.image = pygame.image.load("/images/ship.bmp")
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx

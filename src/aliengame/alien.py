@@ -10,7 +10,7 @@ class Alien(Sprite):
         self.screen = screen
         self.ai_settings = ai_settings
         # 加载外星人图像，并获取渲染
-        self.image = pygame.image.load("D:\workProject\python\python-demo\images\\alien.bmp");
+        self.image = pygame.image.load("/images/alien.bmp");
         self.rect = self.image.get_rect()
         # 每个外星人最初都在左上角
         self.rect.x = self.rect.width
