@@ -28,15 +28,15 @@ def run_game():
     # 创建外星人群
     gf.create_aliens(ai_setting, screen, aliens, ship_height)
     while True:
-        gf.check_events(ai_setting, screen, stats, play_button, ship, aliens, bullets)
+        gf.check_events(ai_setting, screen, stats, play_button, ship, aliens, bullets, sb)
         if stats.game_active:
             ship.update()
             # 子弹管理更新处理
-            gf.update_bullets(ai_setting, screen, ship, bullets, aliens,stats,sb)
+            gf.update_bullets(ai_setting, screen, ship, bullets, aliens, stats, sb)
             # 更新外星人
-            gf.update_aliens(ai_setting, screen, ship, stats, aliens, bullets)
+            gf.update_aliens(ai_setting, screen, ship, stats, aliens, bullets,sb)
         # 刷新窗口
-        gf.update_screen(ai_setting, screen, stats,sb, ship, aliens, bullets, play_button)
+        gf.update_screen(ai_setting, screen, stats, sb, ship, aliens, bullets, play_button)
 
 
 run_game()
