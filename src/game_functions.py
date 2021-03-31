@@ -73,7 +73,7 @@ def fire_bullet(ai_settings, bullets, screen, ship):
         bullets.add(new_bullet)
 
 
-def update_screen(ai_setting, screen, stats, sb,ship, aliens, bullets, play_button):
+def update_screen(ai_setting, screen, stats, sb, ship, aliens, bullets, play_button):
     screen.fill(ai_setting.bg_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
@@ -85,7 +85,7 @@ def update_screen(ai_setting, screen, stats, sb,ship, aliens, bullets, play_butt
     pygame.display.flip()
 
 
-def update_bullets(ai_setting, screen, ship, bullets, aliens,stats,sb):
+def update_bullets(ai_setting, screen, ship, bullets, aliens, stats, sb):
     # 更新子弹位置，并删除已消失的子弹
     bullets.update()
     for bullet in bullets.copy():
@@ -93,16 +93,17 @@ def update_bullets(ai_setting, screen, ship, bullets, aliens,stats,sb):
             bullets.remove(bullet)
     # 检查是否有子弹击中了外星人
 
-    check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship,stats,sb)
+    check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship, stats, sb)
 
 
 # 打所有的外星人被消灭后
-def check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship,stats,sb):
+def check_bullet_alien_collisions(ai_setting, aliens, bullets, screen, ship, stats, sb):
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     if collisions:
         for aliens in collisions.values():
-            stats.score+=ai_setting.alien_points*len(aliens)
+            stats.score += ai_setting.alien_points * len(aliens)
             sb.prep_score()
+        check_high_score(stats, sb)
     if len(aliens) == 0:
         bullets.empty()
         ai_setting.increase_speed()
@@ -202,3 +203,10 @@ def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
         if alien.rect.bottom >= screen_rect.bottom:
             ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
             break
+
+
+# 检查是否诞生了新的最高分
+def check_high_score(stats, sb):
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sb.prep_high_score()
